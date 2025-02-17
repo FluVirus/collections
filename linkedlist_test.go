@@ -5,6 +5,8 @@ import (
 	"testing"
 )
 
+// TODO: add more tests to cover new features and change existing
+
 func TestLinkedList_Prepend(t *testing.T) {
 	t.Parallel()
 
@@ -232,5 +234,25 @@ func TestLinkedList_RemoveFromTail_All(t *testing.T) {
 
 	if !slices.Equal(contentsAfterRemove, contentsAfterRemoveExpected) {
 		t.Errorf("After remove slice (%v) differs from expected (%v)", contentsAfterRemove, contentsAfterRemoveExpected)
+	}
+}
+
+func TestLinkedList_Len_AfterAddSome(t *testing.T) {
+	// arrange
+	var list = NewLinkedList[int]()
+	var contents = []int{1, 20, 35, 49, 51, 63}
+	var expectedLen = len(contents)
+	var listLen int
+
+	//act
+	for i := 0; i < len(contents); i++ {
+		list.Append(contents[i])
+	}
+
+	listLen = list.Len()
+
+	//assert
+	if listLen != expectedLen {
+		t.Errorf("Len of list (%d) is expected to be (%d)", contents, expectedLen)
 	}
 }
